@@ -1,0 +1,18 @@
+#!/bin/sh
+
+#export SSL_CERT_DIR=/etc/ssl/certs
+
+#===Download some forms:
+#ruby DnlFiles.rb f84e264df59951530a761763798b1c 232525643543748 "default" "2021-07-30" 6546885376119265290
+#ruby DnlFiles.rb f84e264df59951530a761763798b1c 435433863549362
+#ruby DnlFiles.rb f84e264df59951530a761763798b1c 324323863549362 "default" "2021-10-28 06:58:00"
+#ruby DnlFiles.rb f84e264df59951530a761763798b1c 754554563549344 "default" "2021-09-11 00:10:00"
+#ruby DnlFiles.rb f84e264df59951530a761763798b1c 454365445434367
+#ruby DnlFiles.rb f84e264df59951530a761763798b1c 564322650451344 "default" "2021-07-30"
+#ruby DnlFiles.rb f84e264df59951530a761763798b1c 978643013136338
+
+#===Download ALL forms:
+ruby DnlFiles.rb f84e264df59951530a761763798b1c all
+#ruby DnlFiles.rb f84e264df59951530a761763798b1c all "/home/user/mydata/JotForm"
+#ruby DnlFiles.rb f84e264df59951530a761763798b1c all "default" "2021-07-30"
+
