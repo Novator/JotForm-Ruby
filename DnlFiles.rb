@@ -68,6 +68,9 @@ $last_created_time = 0
 #Print to console immediately
 $stdout.sync = true
 
+#Delete double spaces from file paths and names
+#RU: Удалять двойные пробелы из путей и имён файлов
+DeleteDoubleSpaces = false
 #Portion of downloading a list of form
 #RU: Порция скачивания списка форм
 FormListPortion = 100
@@ -129,6 +132,9 @@ def clear_file_name(res)
   res.gsub!('/', '_')
   res.gsub!("\\", '_')
   res.gsub!('|', '_')
+  res = res.gsub(/[\r\n\t]/, ' ')
+  res = res.squeeze(' ') if DeleteDoubleSpaces
+  res.strip!
   res
 end
 
@@ -262,9 +268,14 @@ def save_submission(jotform, sub_id, form_id, sub, form_title)
   #Create folder if it doesn't exist
   dir_exists = Dir.exists?(sub_folder)
   if not dir_exists
-    FileUtils.mkdir_p(sub_folder)
-    #FileUtils.mkpath(sub_folder)
-    dir_exists = Dir.exists?(sub_folder)
+    begin
+      #FileUtils.mkdir_p(sub_folder)
+      FileUtils.mkpath(sub_folder)
+      dir_exists = Dir.exists?(sub_folder)
+    rescue Exception => e
+      puts('Exception: ' + e.message)
+      dir_exists = nil
+    end
     if not dir_exists
       puts('Cannot to create folder: ['+sub_folder+']')
       sub_folder = nil
@@ -272,7 +283,7 @@ def save_submission(jotform, sub_id, form_id, sub, form_title)
     end
   end
 
-  if dir_exists
+  if dir_exists and sub_folder
     sub_fn = File.join(sub_folder, 'fields')
 
     sub_fn_txt = sub_fn+'.txt'
